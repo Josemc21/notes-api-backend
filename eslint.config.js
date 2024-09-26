@@ -1,5 +1,5 @@
-import globals, { commonjs } from 'globals'
-import pluginJs from '@eslint/js'
+const { globals, commonjs} = require('globals')
+const pluginJs = require('@eslint/js')
 
 export default [
   {
