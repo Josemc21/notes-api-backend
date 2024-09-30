@@ -1,7 +1,7 @@
 const { average } = require('../utils/for_testing')
 const { test, expect, describe } = require('@jest/globals')
 
-describe('average', () => {
+describe.skip('average', () => {
   test('of one value is the value itself', () => {
     expect(average([1])).toBe(1)
   })

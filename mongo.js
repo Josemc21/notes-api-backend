@@ -1,15 +1,23 @@
 const mongoose = require('mongoose')
 
-const connectionString = process.env.MONGODB_URI
+const { MONGODB_URI,  MONGODB_URI_TEST, NODE_ENV } = process.env
+
+const connectionString = NODE_ENV === 'test'
+  ? MONGODB_URI_TEST
+  : MONGODB_URI
+
+if (!connectionString) {
+  console.error('No connection string provided')
+  process.exit(1)
+}
 
 // Connect to MongoDB
 mongoose.connect(connectionString)
-    .then(() => {
-        console.log('Connected to MongoDB')
-    }).catch((error) => {
-            console.log('Error connecting to MongoDB:', error.message)
-    }
-)
+  .then(() => {
+    console.log('Connected to MongoDB')
+  }).catch((error) => {
+    console.log('Error connecting to MongoDB:', error.message)
+  })
 
 /* 
 const note = new Note({
