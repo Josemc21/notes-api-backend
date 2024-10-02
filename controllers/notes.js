@@ -1,9 +1,13 @@
 const notesRouter = require('express').Router()
 const mongoose = require('mongoose')
 const Note = require('../models/Note')
+const User = require('../models/User')
 
 notesRouter.get('/', async (request, response) => {
-  const notes = await Note.find({})
+  const notes = await Note.find({}).populate('user', { 
+    username: 1, 
+    name: 1
+  })
   response.json(notes)
 })
 
@@ -52,22 +56,32 @@ notesRouter.delete('/:id', async (request, response, next) => {
 })
 
 notesRouter.post('/', async (request, response, next) => {
-  const note = request.body
+  const { 
+    content, 
+    important = false,
+    userId
+  } = request.body
 
-  if (!note || !note.content) {
+  const user = await User.findById(userId)
+
+  if (!content) {
     return response.status(400).json({
       error: 'note.content is missing'
     })
   }
 
   const newNote = new Note({
-    content: note.content,
-    important: note.important || false,
+    content,
+    important,
     date: new Date(),
+    user: user._id
   })
 
   try {
     const savedNote = await newNote.save()
+    user.notes = user.notes.concat(savedNote._id)
+    await user.save()
+
     response.status(201).json(savedNote)
   } catch (error) {
     next(error)
