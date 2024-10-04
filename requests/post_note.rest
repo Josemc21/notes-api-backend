@@ -1,0 +1,8 @@
+POST http://localhost:3001/api/notes
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZmQ1N2VlYTcyZjA0Y2Q4MTA3NzhhMiIsInVzZXJuYW1lIjoibWlkdWRldiIsImlhdCI6MTcyODA0MzM4MywiZXhwIjoxNzI4NjQ4MTgzfQ.2KEx0mB8sO5rTiBXZ331s_br4u4_Kwdsvx1CdPlTu2s
+
+{
+    "content": "Utilizando el middleware del user extractor",
+    "important": true
+}

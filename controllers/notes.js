@@ -2,6 +2,7 @@ const notesRouter = require('express').Router()
 const mongoose = require('mongoose')
 const Note = require('../models/Note')
 const User = require('../models/User')
+const userExtractor = require('../middleware/userExtractor')
 
 notesRouter.get('/', async (request, response) => {
   const notes = await Note.find({}).populate('user', { 
@@ -21,7 +22,7 @@ notesRouter.get('/:id', (request, response, next) => {
     .catch(error => next(error))
 })
 
-notesRouter.put('/:id', (request, response, next) => {
+notesRouter.put('/:id', userExtractor, (request, response, next) => {
   const { id } = request.params
   const note = request.body
 
@@ -35,7 +36,7 @@ notesRouter.put('/:id', (request, response, next) => {
     .catch(error => next(error))
 })
 
-notesRouter.delete('/:id', async (request, response, next) => {
+notesRouter.delete('/:id', userExtractor, async (request, response, next) => {
   const { id } = request.params
 
   // Verifica si el ID es un ObjectId válido
@@ -55,12 +56,14 @@ notesRouter.delete('/:id', async (request, response, next) => {
   }
 })
 
-notesRouter.post('/', async (request, response, next) => {
+notesRouter.post('/', userExtractor, async (request, response, next) => {
   const { 
     content, 
-    important = false,
-    userId
+    important = false
   } = request.body
+
+  // userExtractor
+  const { userId } = request
 
   const user = await User.findById(userId)
 
