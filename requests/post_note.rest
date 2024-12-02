@@ -1,0 +1,8 @@
+POST http://localhost:3001/api/notes
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3NGUxN2EzMmJkNjIyY2JlZjNkMGJjZiIsInVzZXJuYW1lIjoibWlkdWRldiIsImlhdCI6MTczMzE3MTUwOSwiZXhwIjoxNzMzNzc2MzA5fQ.WBDswOLqMrtAPFkTh5ln7uNvWxkjFCD-m63d0oSkueQ
+
+{
+    "content": "Prueba",
+    "important": true
+}

@@ -19,6 +19,11 @@ mongoose.connect(connectionString)
     console.log('Error connecting to MongoDB:', error.message)
   })
 
+process.on('uncaughtException', error => {
+  console.error('uncaughtException', error.message)
+  mongoose.disconnect()
+})
+
 /* 
 const note = new Note({
     content: 'MongoDB is easy',
